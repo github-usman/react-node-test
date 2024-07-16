@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import { serverBaseUrl, serverMode, serverPort } from "./config/env.config.js";
 import userRouter from "./routes/user.route.js";
 import connectMongoDB from "./connect-DB/db.js";
+import sendErrorResponse from "./utils/ErrorResponse.js";
 
 
 // Data base connection #MOGNOD
@@ -19,13 +20,10 @@ const server = http.createServer((req, res) => {
         } else if (req.url.startsWith('/api/v1')) {
             userRouter(req, res);
         } else {
-            res.statusCode = 404;
-            res.setHeader('Content-Type', 'text/plain');
-            res.end('Not Found');
+            return sendErrorResponse(res, 404, "Route not found");
         }
     })
 });
-
 
 
 server.listen(serverPort, () => {

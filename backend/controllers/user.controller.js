@@ -1,4 +1,5 @@
 import userModel from "../models/user.model.js";
+import sendErrorResponse from "../utils/ErrorResponse.js";
 
 // user Register
 export const registerUser = async (req, res) => {
@@ -20,17 +21,46 @@ export const registerUser = async (req, res) => {
                 user,
             }));
         } else {
-            res.writeHead(403, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({
-                success: false,
-                message: 'User is Aleardy Exist',
-            }));
+            return sendErrorResponse(res, 409, "User is Aleardy Exist");
         }
     } catch (error) {
-        res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({
-            success: false,
-            message: 'Internal server Error',
-        }));
+        return sendErrorResponse(res, 500, `${error}`);
     }
 };
+
+
+
+// user Login
+export const loginUser = async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        if (!email || !password) {
+            return sendErrorResponse(res, 400, "Please Enter Email & Password");
+        }
+        const user = await userModel.findOne({ email }).select("+password");
+
+        if (!user) {
+            return sendErrorResponse(res, 401, "Invalid email or password");
+        }
+        const isPasswordMatched = await user.comparePassword(password);
+
+        if (!isPasswordMatched) {
+            return sendErrorResponse(res, 401, "Invalid email or password");
+        }
+
+        const JWTtoken = user.getJWTToken();
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({
+            success: true,
+            user,
+            JWTtoken
+        }));
+    } catch (error) {
+        return sendErrorResponse(res, 500, `${error}`);
+    }
+};
+
+
+
+

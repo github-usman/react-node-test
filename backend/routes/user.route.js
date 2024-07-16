@@ -1,11 +1,13 @@
-import { registerUser } from "../controllers/user.controller.js";
+import { loginUser, registerUser } from "../controllers/user.controller.js";
+import sendErrorResponse from "../utils/ErrorResponse.js";
 
 const router = (req, res) => {
   if (req.method === "POST" && req.url === "/api/v1/register") {
     registerUser(req, res);
+  } else if (req.method === "POST" && req.url === "/api/v1/login") {
+    loginUser(req, res);
   } else {
-    res.writeHead(404, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ success: false, message: "Route not found" }));
+    return sendErrorResponse(res, 404, "Route not found");
   }
 };
 

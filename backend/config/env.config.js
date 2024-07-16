@@ -14,7 +14,13 @@ const database = {
   dbName: process.env.DB_NAME,
 };
 
+// JWT
+const jwtInformation = {
+  jwtSecret: process.env.JWT_SECRET,
+  jwtExpire: process.env.JWT_EXPIRE
+};
+
 
 export const { serverMode, serverPort,serverBaseUrl } = server;
 export const { dbUri, dbName } = database;
-
+export const { jwtSecret, jwtExpire } = jwtInformation;

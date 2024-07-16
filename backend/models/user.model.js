@@ -1,5 +1,9 @@
 import mongoose from "mongoose";
 import validator from "validator";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { jwtExpire, jwtSecret } from "../config/env.config.js";
+
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -9,8 +13,8 @@ const userSchema = new mongoose.Schema({
     },
     date_of_birth: {
         type: Date,
-        required: true,
-        },
+        required: [true, "Please Enter Your Date of Birth"],
+    },
     email: {
         type: String,
         required: [true, "Please Enter Your Email"],
@@ -24,5 +28,25 @@ const userSchema = new mongoose.Schema({
         select: false,
     },
 });
+
+
+// Hashing Password
+
+userSchema.pre("save", async function () {
+    this.password = await bcrypt.hash(this.password, 10);
+});
+
+// JWT TOKEN GENERATION
+userSchema.methods.getJWTToken = function () {
+    return jwt.sign({ id: this._id }, jwtSecret, {
+        expiresIn: jwtExpire,
+    });
+};
+
+// Compare password
+userSchema.methods.comparePassword = async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password);
+};
+
 
 export default mongoose.model('User', userSchema);
