@@ -38,6 +38,9 @@ const ProtectedInformation = () => {
   const handleDecrease = ()=>{
     setCurrentPage((val)=>--val);
   }
+  const handleJump = (val)=>{
+    setCurrentPage(val-1);
+  }
 
   return <>
     <div className="d-flex flex-wrap justify-content-between p-1 bg-warning">
@@ -72,7 +75,7 @@ const ProtectedInformation = () => {
         <button className={`${currentPage === 0?"disable":"arrow-btn"}`} onClick={handleDecrease} disabled={currentPage <= 0}>Previous</button>
         {
           pageNumber.map((val) => (
-            <button className={`btn btn-${currentPage === (val - 1) ? 'primary' : 'outline-primary'}`}>{val}</button>
+            <button className={`btn btn-${currentPage === (val - 1) ? 'primary' : 'outline-primary'}`} key={val} onClick={() => handleJump(val)}>{val}</button>
           ))
         }
         <button className={`${currentPage === totalPage-1?"disable":"arrow-btn"}`} onClick={handleIncrease} disabled={currentPage === totalPage-1}>Next</button>

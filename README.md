@@ -9,7 +9,7 @@
 
 ## Application SetUp
 
-- Environment Vairable set start your MongoDB server
+- MongoDB needs to be in running after the you can follow following
 ### DEVELOPMENT MODE
 
 - rename file example.development.env to .env or use following command
