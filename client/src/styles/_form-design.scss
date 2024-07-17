@@ -1,0 +1,198 @@
+.register__page__form-container {
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(to bottom, #23727f, #1cc3bc);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  //  form card
+  .body-container {
+    margin-top: -100px;
+    border: 1px solid black;
+    max-width: 590px;
+    width: 98%;
+    padding: 0;
+    border-radius: 8px;
+    background-color: #1e2d51;
+
+    // top part of the card
+    .title {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      background-image: url("../assets/media/background-user-image.jpg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: 0% 50%;
+      border-radius: 8px 8px 0 0;
+      width: 100%;
+
+      // user logo sign
+      .user-logo {
+        width: 110px;
+        height: 110px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 1.5rem;
+        margin-bottom: -20px;
+        &:nth-child(2) {
+          font-size: 80px;
+          color: #7d839d;
+          border-radius: 50%;
+          border: 5px solid #7d839d;
+        }
+      }
+      // title of the card form
+      h2 {
+        margin-top: -20px;
+        width: 18rem;
+        max-width: 100%;
+        background-color: #02f5e1;
+        padding-top: 1.3rem;
+        padding-bottom: 1.3rem;
+        color: #05a8ad;
+        font-size: 20px;
+        text-transform: uppercase;
+        text-align: center;
+      }
+    }
+  }
+  .shadow {
+    height: 15px;
+    margin-top: -100px;
+    border: none;
+    max-width: 490px;
+    width: 90%;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow: 1px 150px 11px 2px rgba(97, 97, 99, 0.577) !important;
+  }
+
+  // bootstrap custom
+
+  // form
+  Form {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+
+    .form-group {
+      width: 450px;
+      max-width: 98%;
+      margin: auto;
+      position: relative;
+
+      &.filled .form-label {
+        top:5px;
+        color: #04aa6d;
+        background-color: #02f5e1;
+        border-radius: 3px;
+        padding: 0 1rem;
+        height: fit-content;
+        max-width: 14rem;
+        width: 80%;
+        transition: all 0.5s ease;
+      }
+      &.filled .custom-form-control {
+        background-color: #fff;
+      }
+
+      &.filled .custom-form-control[type="date"] {
+        color: #495057;
+      }
+    }
+
+    .form-label {
+      margin-left: 1rem;
+      bottom: 0.5rem;
+      position: absolute;
+      color: #7d839d;
+      text-transform: lowercase;
+      transition: all 0.5s ease;
+    }
+
+    .custom-form-control[type="date"] {
+      color: transparent;
+    }
+
+    .custom-form-control[type="date"]:focus {
+      color: #495057;
+    }
+
+    .custom-form-control {
+      border: 2px solid #ced4da;
+      padding: 1rem;
+      width: 450px;
+      margin: auto;
+      max-width: 98%;
+      background-color: #4d5975;
+      border: none;
+      font-size: 1rem;
+      border-radius: 10px;
+      transition: all 0.5s ease;
+      margin-top: 1rem;
+
+      &:focus {
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        background-color: #ced4da;
+      }
+
+      &:focus + .form-label {
+        top:4px;
+        color: #04aa6d;
+        background-color: #02f5e1;
+        border-radius: 3px;
+        width: 10rem;
+        padding: 0 1rem;
+        height: fit-content;
+        transition: all 0.5s ease;
+      }
+    }
+    // remember/forgottext
+    .align-items-center {
+      margin-top: 5px;
+      display: flex;
+      justify-content: space-between;
+      color: #7d839d;
+      font-size: 12px;
+      width: 441px;
+      max-width: 98%;
+
+      a {
+        text-decoration: none;
+        color: #7d839d;
+      }
+    }
+    // submit button
+    Button {
+      width: 441px;
+      max-width: 98%;
+      padding: 0.75rem 0;
+      background-color: #02f5e1;
+      color: #05a8ad;
+      font-size: 20px;
+      font-weight: 500;
+      text-transform: uppercase;
+      margin: 2rem auto 0 auto;
+      border-radius: 10px;
+    }
+
+    // switch between page
+    .link-next-form {
+      width: 441px;
+      max-width: 98%;
+      color: #05a8ad;
+      padding-bottom: 2rem;
+      padding-top: 0.5rem;
+      font-size: 12px;
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+}

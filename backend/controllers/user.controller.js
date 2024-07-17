@@ -17,8 +17,8 @@ export const registerUser = async (req, res) => {
             res.writeHead(201, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({
                 success: true,
-                message: 'User Registered successfully',
                 user,
+                JWTtoken
             }));
         } else {
             return sendErrorResponse(res, 409, "User is Aleardy Exist");
