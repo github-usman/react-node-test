@@ -1,12 +1,11 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
-import { FaLock } from "react-icons/fa";
+import { FaCalendar, FaLock } from "react-icons/fa";
 import { FaUser } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
-import { Link } from 'react-router-dom';
-
-const uri = process.env.REACT_APP_SERVER_BASE_URL;
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { register } from '../redux/auth/authSlice';
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -24,21 +23,25 @@ const RegistrationForm = () => {
     }));
   };
 
+
+  // submit using state management
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {error} = useSelector((state)=>state.auth);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${uri}/register`, formData);
-      console.log('Registration successful:', response.data);
-      setFormData({
-        name: '',
-        date_of_birth: '',
-        email: '',
-        password: ''
-      });
+      await dispatch(register({name:formData.name,date_of_birth:formData.date_of_birth, email:formData.email,password: formData.password }))
+        .unwrap()
+        .then(() => {
+          navigate('/protected-info');
+        })
+        .catch(() => {});
     } catch (error) {
-      console.error('Registration failed:', error);
+      console.log(error);
     }
   };
+
 
   return (
     <div className="register__page__form-container">
@@ -55,6 +58,7 @@ const RegistrationForm = () => {
               value={formData.name}
               onChange={handleChange}
               className="custom-form-control"
+              autoComplete="off"
               required
             />
             <Form.Label className='form-label'><FaUser/> | name</Form.Label>
@@ -67,9 +71,10 @@ const RegistrationForm = () => {
               value={formData.date_of_birth}
               onChange={handleChange}
               className="custom-form-control"
+              autoComplete="off"
               required
             />
-          <Form.Label className='form-label'><FaUser/> | Date of Birth</Form.Label>
+          <Form.Label className='form-label'><FaCalendar/> | Date of Birth</Form.Label>
           </Form.Group>
 
           <Form.Group controlId="formEmail" className={`form-group ${formData.email.length>0?'filled':''}`}>
@@ -79,6 +84,7 @@ const RegistrationForm = () => {
               value={formData.email}
               onChange={handleChange}
               className="custom-form-control"
+              autoComplete="off"
               required
             />
           <Form.Label className='form-label'><MdEmail/> | Email</Form.Label>
@@ -91,18 +97,19 @@ const RegistrationForm = () => {
               value={formData.password}
               onChange={handleChange}
               className="custom-form-control"
+              autoComplete="off"
               required
             />
           <Form.Label className='form-label'><FaLock/> | Password</Form.Label>
           </Form.Group>
-
+          {<Form.Text className='m-auto mt-1 text-danger shadow' >{error}</Form.Text>}
           <Button variant="primary" type="submit">
             Register
           </Button>
           <Form.Text className='m-auto link-next-form'>If you have an account? <Link to={"/"}>Sign In</Link></Form.Text>
         </Form>
       </Container>
-      <div className='shadow'></div>
+      <div className='custom-shadow'></div>
     </div>
   );
 };

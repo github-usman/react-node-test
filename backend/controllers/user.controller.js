@@ -7,13 +7,14 @@ export const registerUser = async (req, res) => {
 
     try {
         const isEmailExist = await userModel.findOne({ email });
-        if (isEmailExist === null) {
+        if (!isEmailExist) {
             const user = await userModel.create({
                 name,
                 date_of_birth,
                 email,
                 password,
             });
+            const JWTtoken = user.getJWTToken(); 
             res.writeHead(201, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({
                 success: true,
@@ -21,14 +22,12 @@ export const registerUser = async (req, res) => {
                 JWTtoken
             }));
         } else {
-            return sendErrorResponse(res, 409, "User is Aleardy Exist");
+            return sendErrorResponse(res, 409, "User already exists");
         }
     } catch (error) {
         return sendErrorResponse(res, 500, `${error}`);
     }
 };
-
-
 
 // user Login
 export const loginUser = async (req, res) => {
@@ -60,7 +59,3 @@ export const loginUser = async (req, res) => {
         return sendErrorResponse(res, 500, `${error}`);
     }
 };
-
-
-
-

@@ -1,13 +1,13 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
 import { FaLock } from "react-icons/fa";
 import { FaUser } from "react-icons/fa6";
-import { Link } from 'react-router-dom';
-
-const uri = process.env.REACT_APP_SERVER_BASE_URL;
+import { Link, useNavigate } from 'react-router-dom';
+import { login } from '../redux/auth/authSlice';
+import {useDispatch, useSelector} from "react-redux";
 
 const Login = () => {
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -22,13 +22,21 @@ const Login = () => {
     }));
   };
 
+  // submit using state management
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {error} = useSelector((state)=>state.auth);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${uri}/login`, formData);
-      console.log('Registration successful:', response.data);
+      await dispatch(login({ email:formData.email,password: formData.password }))
+        .unwrap()
+        .then(() => {
+          navigate('/protected-info');
+        })
+        .catch(() => {});
     } catch (error) {
-      console.error('Registration failed:', error);
+      console.log(error);
     }
   };
 
@@ -47,6 +55,7 @@ const Login = () => {
               value={formData.email}
               onChange={handleChange}
               className="custom-form-control"
+              autoComplete="email"
               required
             />
             <Form.Label className='form-label'><FaUser /> | Username</Form.Label>
@@ -59,6 +68,7 @@ const Login = () => {
               value={formData.password}
               onChange={handleChange}
               className="custom-form-control"
+              autoComplete="current-password"
               required
             />
             <Form.Label className='form-label'><FaLock /> | Password</Form.Label>
@@ -75,13 +85,14 @@ const Login = () => {
 
             <Link to="/forgot-password">Forgot Your Password?</Link>
           </Container>
+          {<Form.Text className='m-auto text-danger shadow' >{error}</Form.Text>}
           <Button variant="primary" type="submit">
             LOGIN
           </Button>
           <Form.Text className='m-auto link-next-form'>If you don't have an account? <Link to={"/register"}>Sign Up</Link></Form.Text>
         </Form>
       </Container>
-      <div className='shadow'></div>
+      <div className='custom-shadow'></div>
     </div>
   );
 };
