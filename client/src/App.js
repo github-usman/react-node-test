@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import ProtectedRoute from "./custom-hooks/ProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const RegistrationForm = lazy(() => import('./pages/Register'));
 const Login = lazy(() => import('./pages/Login'));
