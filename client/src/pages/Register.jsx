@@ -6,6 +6,7 @@ import { MdEmail } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { register } from '../redux/auth/authSlice';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -109,6 +110,7 @@ const RegistrationForm = () => {
           <Form.Text className='m-auto link-next-form'>If you have an account? <Link to={"/"}>Sign In</Link></Form.Text>
         </Form>
       </Container>
+      <LoadingSpinner/>
       <div className='custom-shadow'></div>
     </div>
   );

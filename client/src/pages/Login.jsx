@@ -5,6 +5,7 @@ import { FaUser } from "react-icons/fa6";
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../redux/auth/authSlice';
 import {useDispatch, useSelector} from "react-redux";
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const Login = () => {
 
@@ -92,6 +93,7 @@ const Login = () => {
           <Form.Text className='m-auto link-next-form'>If you don't have an account? <Link to={"/register"}>Sign Up</Link></Form.Text>
         </Form>
       </Container>
+      <LoadingSpinner/>
       <div className='custom-shadow'></div>
     </div>
   );

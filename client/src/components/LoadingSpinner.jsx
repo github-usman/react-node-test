@@ -1,7 +1,19 @@
+
+import React from "react";
+import { useSelector } from "react-redux";
 import Spinner from 'react-bootstrap/Spinner';
 
-function BorderExample() {
-  return <Spinner animation="border" />;
-}
+const LoadingSpinner = () => {
+  const { isLoading } = useSelector((state) => state.auth);
 
-export default BorderExample;
+  return isLoading ? (
+    <div className="container-spinner">
+
+      <Spinner animation="border" className="spinner" />
+    </div>
+  ) : (
+    <></>
+  );
+};
+
+export default LoadingSpinner;

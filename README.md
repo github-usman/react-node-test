@@ -1,4 +1,11 @@
-# Getting Started with Create React App
+## Getting Started with Create React App
+# Strictly Nodej.js USED (no Express.js)
+
+## Pages 
+![login-page](./client/src/assets/media/git-login.png)
+![register page](./client/src/assets/media/git-regis.png)
+![protected-info page](./client/src/assets/media/git-info.png)
+
 
 ## Application SetUp
 
@@ -52,4 +59,18 @@ npm run build
 npm start
 ```
 
+### Tech Stack used
 
+```
+React.js
+react-bootstrap
+react form
+Redux
+axios
+Node.js
+Json Web Token
+MongoDB
+```
+
+### BONUS 
+- added LOADING SPINNER, 404 page not found also implemented
